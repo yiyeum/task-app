@@ -1,10 +1,22 @@
 import React from 'react'
-import { Grid, Checkbox, Typography, WithStyles, withStyles } from '@material-ui/core'
+import { Grid, Checkbox, Typography, WithStyles, withStyles, Button, Box } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const styles = {
     root: {
         borderBottom: '1px solid #E5E5E5',
         padding: 20
+    },
+    checkboxGrid: {
+        textAlign: 'center' as 'center'
+    },
+    icon: {
+        color: '#757575'
+    },
+    tag: {
+        backgroundColor: '#FFDEDE',
+        padding: '3px 10px',
+        borderRadius: 10
     }
 }
 
@@ -13,12 +25,23 @@ const ListBase = (props: WithStyles<typeof styles>) => {
 
     return (
         <Grid container className={classes.root}>
-            <Grid item lg={2} md={2} sm={2}><Checkbox /></Grid>
-            <Grid item lg={9} md={9} sm={9}>
-                <Typography variant='body1'>Clean Washroom</Typography>
-                <Typography variant='caption'>Sep 2, 2020</Typography>
+            <Grid item lg={1} md={1} sm={1} className={classes.checkboxGrid}><Checkbox /></Grid>
+            <Grid item lg={7} md={9} sm={9}>
+                <Box display='inline-block'>
+                    <Typography variant='body1' color='textPrimary'>Clean Washroom</Typography>
+                </Box>
+                <Box display='inline-block' ml={5}>
+                    <div className={classes.tag}>
+                        <Typography variant='body2' color='textPrimary'>Tag</Typography>
+                    </div>
+                </Box>
+                <Box display='block'>
+                    <Typography variant='caption' color='textSecondary'>Sep 2, 2020</Typography>
+                </Box>
             </Grid>
-            <Grid item lg={1} md={1} sm={1}>TD</Grid>
+            <Grid item lg={1} md={1} sm={1}>
+                <Button><DeleteIcon className={classes.icon} /></Button>
+            </Grid>
         </Grid>
     );
 }

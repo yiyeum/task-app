@@ -6,7 +6,6 @@ const styles = {
     root: {
         backgroundColor: '#FAFAFA',
         padding: 20,
-        marginTop: 40,
         height: '80vh',
         borderTopLeftRadius: 90,
         borderTopRightRadius: 90

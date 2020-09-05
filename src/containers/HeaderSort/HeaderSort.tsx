@@ -4,7 +4,10 @@ import { WithStyles, withStyles } from '@material-ui/core';
 
 const styles = {
     root: {
-        padding: 40
+        padding: '3% 11.5%'
+    },
+    select: {
+        width: '80%'
     }
 }
 
@@ -14,11 +17,11 @@ const HeaderSortBase = (props: WithStyles<typeof styles>) => {
     return (
         <Grid container className={classes.root}>
             <Grid item lg={8} md={8} sm={8}>
-                <Typography variant='h4'>My Tasks</Typography>
-                <Typography variant='body1'>1 of 3 tasks</Typography>
+                <Typography variant='h4' color='textPrimary'>My Tasks</Typography>
+                <Typography variant='body1' color='textSecondary'>1 of 3 tasks</Typography>
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-                <Select />
+                <Select className={classes.select} />
             </Grid>
         </Grid>
     );
