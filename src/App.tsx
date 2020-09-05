@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { TaskView } from './pages'
+import { TaskView } from './container'
 import { DEFAULT_URL } from './constants';
 
 function App() {

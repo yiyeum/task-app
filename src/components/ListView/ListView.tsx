@@ -1,5 +1,5 @@
 import React from 'react'
-import { List } from '../../components'
+import { List } from '..'
 import { WithStyles, withStyles } from '@material-ui/core';
 
 const styles = {
