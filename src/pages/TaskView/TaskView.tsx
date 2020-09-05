@@ -1,7 +1,12 @@
 import React from 'react'
+import { HeaderSort, ListView, TaskForm } from '../../containers'
 
 export const TaskView = () => {
     return (
-        <>Task View Page</>
+        <>
+            <HeaderSort />
+            <ListView />
+            <TaskForm />
+        </>
     );
 }
