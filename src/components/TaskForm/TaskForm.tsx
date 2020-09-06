@@ -48,6 +48,7 @@ const TaskFormBase = (props: IProps) => {
     const [form, setForm] = useState(formState)
 
     const { classes, list, setList, category, setCategory } = props
+    const formattedCategory = form.category.trim().charAt(0).toUpperCase() + form.category.trim().slice(1)
     let isTaskValid = form.task.trim().length !== 0
     let isCategoryValid = form.category.trim().length !== 0
 
@@ -56,9 +57,8 @@ const TaskFormBase = (props: IProps) => {
     }
 
     const updateCategory = (): void => {
-        const formattedCategory = form.category.trim().charAt(0).toUpperCase()
         if (category.filter((ct: string) => ct === formattedCategory).length === 0) {
-            setCategory([...category, form.category])
+            setCategory([...category, formattedCategory])
         }
     }
 
@@ -68,7 +68,7 @@ const TaskFormBase = (props: IProps) => {
             const updatedTask = {
                 id: '',
                 task: form.task,
-                category: form.category,
+                category: formattedCategory,
                 done: false,
                 createdDate: new Date()
             }
@@ -81,7 +81,7 @@ const TaskFormBase = (props: IProps) => {
             setForm({ ...form, error: true })
         }
     }
-    console.log(form)
+
     return (
         <Grid container className={classes.root}>
             <Grid item lg={2} md={2} sm={2}>
