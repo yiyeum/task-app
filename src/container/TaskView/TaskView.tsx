@@ -4,13 +4,19 @@ import { IList } from '../../models'
 
 export const TaskView = () => {
     const [list, setList] = useState<IList[]>([])
-    const [category, setCategory] = useState<String[]>([])
+    const [category, setCategory] = useState<string[]>([])
+    const [sortBy, setSortBy] = useState('all')
 
     return (
         <>
-            <HeaderSort />
+            <HeaderSort
+                category={category}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+            />
             <ListView
                 list={list}
+                sortBy={sortBy}
             />
             <TaskForm
                 list={list}

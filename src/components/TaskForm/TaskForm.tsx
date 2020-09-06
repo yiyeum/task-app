@@ -28,13 +28,13 @@ const styles = {
 interface IProps extends WithStyles<typeof styles> {
     list: IList[]
     setList: Dispatch<SetStateAction<any>>
-    category: String[]
-    setCategory: Dispatch<SetStateAction<String[]>>
+    category: string[]
+    setCategory: Dispatch<SetStateAction<string[]>>
 }
 
 interface IFormState {
-    task: String
-    category: String
+    task: string
+    category: string
     error: boolean
 }
 
@@ -57,7 +57,7 @@ const TaskFormBase = (props: IProps) => {
 
     const updateCategory = (): void => {
         const formattedCategory = form.category.trim().charAt(0).toUpperCase()
-        if (category.filter((ct: String) => ct === formattedCategory).length === 0) {
+        if (category.filter((ct: string) => ct === formattedCategory).length === 0) {
             setCategory([...category, form.category])
         }
     }

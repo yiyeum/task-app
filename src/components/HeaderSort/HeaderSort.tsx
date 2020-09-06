@@ -1,6 +1,7 @@
-import React from 'react'
-import { Grid, Typography, Select } from '@material-ui/core'
+import React, { SetStateAction, Dispatch, ChangeEvent } from 'react'
+import { Grid, Typography, Select, MenuItem } from '@material-ui/core'
 import { WithStyles, withStyles } from '@material-ui/core';
+import { IList } from '../../models';
 
 const styles = {
     root: {
@@ -11,8 +12,14 @@ const styles = {
     }
 }
 
-const HeaderSortBase = (props: WithStyles<typeof styles>) => {
-    const { classes } = props
+interface IProps extends WithStyles<typeof styles> {
+    category: string[]
+    sortBy: string
+    setSortBy: Dispatch<SetStateAction<string>>
+}
+
+const HeaderSortBase = (props: IProps) => {
+    const { classes, category, sortBy, setSortBy } = props
 
     return (
         <Grid container className={classes.root}>
@@ -21,7 +28,19 @@ const HeaderSortBase = (props: WithStyles<typeof styles>) => {
                 <Typography variant='body1' color='textSecondary'>1 of 3 tasks</Typography>
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-                <Select className={classes.select} />
+                <Select
+                    className={classes.select}
+                    value={sortBy}
+                    onChange={(e: ChangeEvent<{ value: unknown }>) => setSortBy(e.target.value as string)}
+                >
+                    <MenuItem value='all'>All</MenuItem>
+                    {
+                        category.length > 0 &&
+                        category.map((item: string) => {
+                            return <MenuItem value={item}>{item}</MenuItem>
+                        })
+                    }
+                </Select>
             </Grid>
         </Grid>
     );

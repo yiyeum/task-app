@@ -20,16 +20,28 @@ const styles = {
 
 interface IProps extends WithStyles<typeof styles> {
     list: IList[]
+    sortBy: string
 }
 
 const ListViewBase = (props: IProps) => {
-    const { classes, list } = props
+    const { classes, list, sortBy } = props
+
+    const filterTodos = (allTodoItems: IList[], selectedCategory: string) => {
+        if (allTodoItems.length > 0) {
+            if (selectedCategory === 'all') {
+                return allTodoItems
+            }
+            return allTodoItems.filter((item: IList) => {
+                return item.category === selectedCategory
+            })
+        }
+    }
 
     return (
         <div className={classes.root}>
             {
-                list.length > 0 ?
-                    list.map((item: IList) => {
+                filterTodos(list, sortBy) ?
+                    filterTodos(list, sortBy)!.map((item: IList) => {
                         return <List item={item} />
                     })
                     :
