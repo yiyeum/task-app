@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
-import { Grid, TextField, WithStyles, withStyles, Button, Typography, Box } from '@material-ui/core'
+import { Grid, TextField, WithStyles, withStyles, Button } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { IList } from '../../models'
+import moment from 'moment'
 
 const styles = {
     root: {
@@ -66,11 +67,11 @@ const TaskFormBase = (props: IProps) => {
         if (isTaskValid && isCategoryValid) {
             // update list and category state
             const updatedTask = {
-                id: '',
+                id: moment(),
                 task: form.task,
                 category: formattedCategory,
                 done: false,
-                createdDate: new Date()
+                createdDate: moment()
             }
             setList([...list, updatedTask])
             updateCategory()

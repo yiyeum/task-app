@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { WithStyles, withStyles, Box, Typography } from '@material-ui/core'
 import EventSeatIcon from '@material-ui/icons/EventSeat'
 import { IList } from '../../models';
@@ -21,10 +21,11 @@ const styles = {
 interface IProps extends WithStyles<typeof styles> {
     list: IList[]
     sortBy: string
+    setList: Dispatch<SetStateAction<IList[]>>
 }
 
 const ListViewBase = (props: IProps) => {
-    const { classes, list, sortBy } = props
+    const { classes, list, sortBy, setList } = props
 
     const filterTodos = (allTodoItems: IList[], selectedCategory: string) => {
         if (allTodoItems.length > 0) {
@@ -42,7 +43,7 @@ const ListViewBase = (props: IProps) => {
             {
                 filterTodos(list, sortBy) ?
                     filterTodos(list, sortBy)!.map((item: IList) => {
-                        return <List item={item} />
+                        return <List item={item} setList={setList} list={list} key={item.id} />
                     })
                     :
                     <Box textAlign='center' mt={20}>

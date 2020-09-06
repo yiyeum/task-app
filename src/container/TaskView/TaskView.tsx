@@ -13,10 +13,12 @@ export const TaskView = () => {
                 category={category}
                 sortBy={sortBy}
                 setSortBy={setSortBy}
+                list={list}
             />
             <ListView
                 list={list}
                 sortBy={sortBy}
+                setList={setList}
             />
             <TaskForm
                 list={list}
