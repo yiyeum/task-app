@@ -9,7 +9,9 @@ export const TaskView = () => {
     return (
         <>
             <HeaderSort />
-            <ListView />
+            <ListView
+                list={list}
+            />
             <TaskForm
                 list={list}
                 setList={setList}

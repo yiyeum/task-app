@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Checkbox, Typography, WithStyles, withStyles, Button, Box } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
+import { IList } from '../../models'
 
 const styles = {
     root: {
@@ -20,19 +21,24 @@ const styles = {
     }
 }
 
-const ListBase = (props: WithStyles<typeof styles>) => {
-    const { classes } = props
+interface IProps extends WithStyles<typeof styles> {
+    item: IList
+}
+
+const ListBase = (props: IProps) => {
+    const { classes, item } = props
+    const { task, category } = item
 
     return (
         <Grid container className={classes.root}>
             <Grid item lg={1} md={1} sm={1} className={classes.checkboxGrid}><Checkbox /></Grid>
             <Grid item lg={7} md={9} sm={9}>
                 <Box display='inline-block'>
-                    <Typography variant='body1' color='textPrimary'>Clean Washroom</Typography>
+                    <Typography variant='body1' color='textPrimary'>{task}</Typography>
                 </Box>
                 <Box display='inline-block' ml={5}>
                     <div className={classes.tag}>
-                        <Typography variant='body2' color='textPrimary'>Tag</Typography>
+                        <Typography variant='body2' color='textPrimary'>{category}</Typography>
                     </div>
                 </Box>
                 <Box display='block'>
