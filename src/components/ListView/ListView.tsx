@@ -1,14 +1,15 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { WithStyles, withStyles, Box, Typography } from '@material-ui/core'
 import EventSeatIcon from '@material-ui/icons/EventSeat'
-import { IList } from '../../models';
+import { IList, ICategory } from '../../models';
 import { List } from '..'
 
 const styles = {
     root: {
         backgroundColor: '#FAFAFA',
         padding: 20,
-        height: '80vh',
+        minHeight: '100vh',
+        marginBottom: '95px',
         borderTopLeftRadius: 90,
         borderTopRightRadius: 90
     },
@@ -22,8 +23,8 @@ interface IProps extends WithStyles<typeof styles> {
     list: IList[]
     sortBy: string
     setList: Dispatch<SetStateAction<IList[]>>
-    setCategory: Dispatch<SetStateAction<string[]>>
-    category: string[]
+    setCategory: Dispatch<SetStateAction<ICategory[]>>
+    category: ICategory[]
     setSortBy: Dispatch<SetStateAction<string>>
 }
 
@@ -36,7 +37,7 @@ const ListViewBase = (props: IProps) => {
                 return allTodoItems
             }
             return allTodoItems.filter((item: IList) => {
-                return item.category === selectedCategory
+                return item.category.name === selectedCategory
             })
         }
     }

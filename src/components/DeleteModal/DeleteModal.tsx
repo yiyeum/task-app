@@ -31,7 +31,7 @@ export const DeleteModal = (props: IProps) => {
                     Cancel
                 </Button>
                 <Button onClick={handleDelete} autoFocus>
-                    <Typography color='error'>Yes, Delete it</Typography>
+                    Yes, Delete it
                 </Button>
             </DialogActions>
         </Dialog>

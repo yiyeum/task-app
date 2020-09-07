@@ -1,9 +1,8 @@
 import React, { Dispatch, SetStateAction, ChangeEvent, useState } from 'react'
-import moment from 'moment'
 import { Grid, Checkbox, Typography, WithStyles, withStyles, Button, Box } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { IList } from '../../models'
-import { DeleteModal } from '../'
+import { IList, ICategory } from '../../models'
+import { DeleteModal, CategoryTag } from '../'
 import { formatDate } from '../../utils/format'
 
 const styles = {
@@ -31,13 +30,14 @@ interface IProps extends WithStyles<typeof styles> {
     item: IList
     setList: Dispatch<SetStateAction<IList[]>>
     list: IList[]
-    setCategory: Dispatch<SetStateAction<string[]>>
-    category: string[]
+    setCategory: Dispatch<SetStateAction<ICategory[]>>
+    category: ICategory[]
     setSortBy: Dispatch<SetStateAction<string>>
 }
 
 const ListBase = (props: IProps) => {
     const { classes, item, setList, list, setCategory, setSortBy } = props
+
     const { task, category, createdDate, done } = item
     const [modalState, setModalState] = useState(false)
 
@@ -56,7 +56,7 @@ const ListBase = (props: IProps) => {
 
     const handleDelete = () => {
         if (list.filter((i: IList) => i.category === item.category).length === 1) {
-            setCategory(props.category.filter((c: string) => c !== item.category))
+            setCategory(props.category.filter((c: ICategory) => c.name !== item.category.name))
             setSortBy('all')
         }
         setList(list.filter((i: IList) => i.id !== item.id))
@@ -78,11 +78,7 @@ const ListBase = (props: IProps) => {
                         </Typography>
                     </Box>
                     <Box display='inline-block' ml={5}>
-                        <div className={classes.tag}>
-                            <Typography variant='body2' color='textPrimary' className={done ? classes.done : ''}>
-                                {category}
-                            </Typography>
-                        </div>
+                        <CategoryTag done={done} category={category} />
                     </Box>
                     <Box display='block'>
                         <Typography variant='caption' color='textSecondary'>

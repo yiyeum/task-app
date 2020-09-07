@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
-import moment from 'moment'
 import { Grid, TextField, WithStyles, withStyles, Button } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { IList } from '../../models'
+import { IList, ICategory } from '../../models'
+import { getPastelColor } from '../../utils/helper'
 
 const styles = {
     root: {
@@ -29,8 +29,8 @@ const styles = {
 interface IProps extends WithStyles<typeof styles> {
     list: IList[]
     setList: Dispatch<SetStateAction<any>>
-    category: string[]
-    setCategory: Dispatch<SetStateAction<string[]>>
+    category: ICategory[]
+    setCategory: Dispatch<SetStateAction<ICategory[]>>
 }
 
 interface IFormState {
@@ -47,31 +47,55 @@ const formState: IFormState = {
 
 const TaskFormBase = (props: IProps) => {
     const [form, setForm] = useState(formState)
-
     const { classes, list, setList, category, setCategory } = props
-    const formattedCategory = form.category.trim().charAt(0).toUpperCase() + form.category.trim().slice(1)
-    let isTaskValid = form.task.trim().length !== 0
-    let isCategoryValid = form.category.trim().length !== 0
+    const formattedCategory: string = form.category.trim().charAt(0).toUpperCase() + form.category.trim().slice(1)
+    const identicalCategory: ICategory[] = category.filter((ct: ICategory) => ct.name === formattedCategory)
+    const tagColor: string = getPastelColor()
+
+    let isTaskValid: boolean = form.task.trim().length !== 0
+    let isCategoryValid: boolean = form.category.trim().length !== 0
 
     const handleForm = (e: ChangeEvent<HTMLInputElement>): void => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
     const updateCategory = (): void => {
-        if (category.filter((ct: string) => ct === formattedCategory).length === 0) {
-            setCategory([...category, formattedCategory])
+        if (identicalCategory.length === 0) {
+            const categoryWithHsl: ICategory = {
+                name: formattedCategory,
+                hsl: tagColor
+            }
+            setCategory([...category, categoryWithHsl])
         }
     }
 
-    const submitForm = () => {
+    const submitForm = (): void => {
+        let updatedTask: IList
+
         if (isTaskValid && isCategoryValid) {
             // update list and category state
-            const updatedTask = {
-                id: moment(),
-                task: form.task,
-                category: formattedCategory,
-                done: false,
-                createdDate: moment()
+            if (identicalCategory.length > 0) {
+                updatedTask = {
+                    id: new Date().toString(),
+                    task: form.task,
+                    category: {
+                        name: formattedCategory,
+                        hsl: identicalCategory[0].hsl
+                    },
+                    done: false,
+                    createdDate: new Date()
+                }
+            } else {
+                updatedTask = {
+                    id: new Date().toString(),
+                    task: form.task,
+                    category: {
+                        name: formattedCategory,
+                        hsl: tagColor
+                    },
+                    done: false,
+                    createdDate: new Date()
+                }
             }
             setList([...list, updatedTask])
             updateCategory()

@@ -1,7 +1,7 @@
 import React, { SetStateAction, Dispatch, ChangeEvent } from 'react'
 import { Grid, Typography, Select, MenuItem } from '@material-ui/core'
 import { WithStyles, withStyles } from '@material-ui/core';
-import { IList } from '../../models';
+import { IList, ICategory } from '../../models';
 import bgImage from '../../assets/images/bg.png'
 
 const styles = {
@@ -17,7 +17,7 @@ const styles = {
 }
 
 interface IProps extends WithStyles<typeof styles> {
-    category: string[]
+    category: ICategory[]
     sortBy: string
     setSortBy: Dispatch<SetStateAction<string>>
     list: IList[]
@@ -46,8 +46,8 @@ const HeaderSortBase = (props: IProps) => {
                     <MenuItem value='all'>All</MenuItem>
                     {
                         category.length > 0 &&
-                        category.map((item: string, index: number) => {
-                            return <MenuItem value={item} key={index}>{item}</MenuItem>
+                        category.map((item: ICategory, index: number) => {
+                            return <MenuItem value={item.name} key={index}>{item.name}</MenuItem>
                         })
                     }
                 </Select>
