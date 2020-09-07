@@ -22,10 +22,13 @@ interface IProps extends WithStyles<typeof styles> {
     list: IList[]
     sortBy: string
     setList: Dispatch<SetStateAction<IList[]>>
+    setCategory: Dispatch<SetStateAction<string[]>>
+    category: string[]
+    setSortBy: Dispatch<SetStateAction<string>>
 }
 
 const ListViewBase = (props: IProps) => {
-    const { classes, list, sortBy, setList } = props
+    const { classes, list, sortBy, setList, setCategory, category, setSortBy } = props
 
     const filterTodos = (allTodoItems: IList[], selectedCategory: string) => {
         if (allTodoItems.length > 0) {
@@ -43,7 +46,17 @@ const ListViewBase = (props: IProps) => {
             {
                 filterTodos(list, sortBy) ?
                     filterTodos(list, sortBy)!.map((item: IList) => {
-                        return <List item={item} setList={setList} list={list} key={item.id} />
+                        return (
+                            <List
+                                item={item}
+                                setList={setList}
+                                list={list}
+                                key={item.id}
+                                setCategory={setCategory}
+                                category={category}
+                                setSortBy={setSortBy}
+                            />
+                        )
                     })
                     :
                     <Box textAlign='center' mt={20}>

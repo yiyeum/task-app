@@ -19,6 +19,9 @@ export const TaskView = () => {
                 list={list}
                 sortBy={sortBy}
                 setList={setList}
+                setCategory={setCategory}
+                category={category}
+                setSortBy={setSortBy}
             />
             <TaskForm
                 list={list}

@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
+import moment from 'moment'
 import { Grid, TextField, WithStyles, withStyles, Button } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { IList } from '../../models'
-import moment from 'moment'
 
 const styles = {
     root: {
@@ -105,9 +105,7 @@ const TaskFormBase = (props: IProps) => {
                     required={true}
                     error={form.error && !isTaskValid}
                     helperText={(form.error && !isTaskValid) && 'Pleae fill this field'}
-                    inputProps={{
-                        maxLength: 50
-                    }}
+                    inputProps={{ maxLength: 50 }}
                 />
             </Grid>
             <Grid item lg={3} md={3} sm={3}>
@@ -120,9 +118,7 @@ const TaskFormBase = (props: IProps) => {
                     required={true}
                     error={form.error && !isCategoryValid}
                     helperText={(form.error && !isCategoryValid) && 'Pleae fill this field'}
-                    inputProps={{
-                        maxLength: 20
-                    }}
+                    inputProps={{ maxLength: 20 }}
                 />
             </Grid>
         </Grid>
