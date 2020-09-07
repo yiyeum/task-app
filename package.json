@@ -1,7 +1,7 @@
 {
   "name": "task-app",
   "version": "0.1.0",
-  "homepage": "https://my-task-kate.herokuapp.com/build",
+  "homepage": "http://yiyeum.github.io/task-app",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.14",
@@ -21,14 +21,17 @@
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-router-dom": "^5.1.5",
+    "gh-pages": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "tsc"
+    "postinstall": "tsc",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
