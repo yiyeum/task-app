@@ -2,10 +2,14 @@ import React, { SetStateAction, Dispatch, ChangeEvent } from 'react'
 import { Grid, Typography, Select, MenuItem } from '@material-ui/core'
 import { WithStyles, withStyles } from '@material-ui/core';
 import { IList } from '../../models';
+import bgImage from '../../assets/images/bg.png'
 
 const styles = {
     root: {
-        padding: '3% 11.5%'
+        padding: '3% 11.5%',
+        backgroundImage: `url(${bgImage})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'top'
     },
     select: {
         width: '80%'
@@ -29,11 +33,11 @@ const HeaderSortBase = (props: IProps) => {
 
     return (
         <Grid container className={classes.root}>
-            <Grid item lg={8} md={8} sm={8}>
+            <Grid item lg={8} md={8} sm={12} xs={12}>
                 <Typography variant='h4' color='textPrimary'>My Tasks</Typography>
                 <Typography variant='body1' color='textSecondary'>{getTaskProgress()}</Typography>
             </Grid>
-            <Grid item lg={4} md={4} sm={4}>
+            <Grid item lg={4} md={4} sm={12} xs={12}>
                 <Select
                     className={classes.select}
                     value={sortBy}

@@ -4,6 +4,7 @@ import { Grid, Checkbox, Typography, WithStyles, withStyles, Button, Box } from 
 import DeleteIcon from '@material-ui/icons/Delete'
 import { IList } from '../../models'
 import { DeleteModal } from '../'
+import { formatDate } from '../../utils/format'
 
 const styles = {
     root: {
@@ -85,7 +86,7 @@ const ListBase = (props: IProps) => {
                     </Box>
                     <Box display='block'>
                         <Typography variant='caption' color='textSecondary'>
-                            {moment(createdDate).format('MMM Do, YYYY')}
+                            {formatDate(createdDate)}
                         </Typography>
                     </Box>
                 </Grid>
