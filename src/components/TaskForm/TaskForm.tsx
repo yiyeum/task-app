@@ -48,6 +48,7 @@ const formState: IFormState = {
 const TaskFormBase = (props: IProps) => {
     const [form, setForm] = useState(formState)
     const { classes, list, setList, category, setCategory } = props
+
     const formattedCategory: string = form.category.trim().charAt(0).toUpperCase() + form.category.trim().slice(1)
     const identicalCategory: ICategory[] = category.filter((ct: ICategory) => ct.name === formattedCategory)
     const tagColor: string = getPastelColor()
@@ -69,35 +70,23 @@ const TaskFormBase = (props: IProps) => {
         }
     }
 
-    const submitForm = (): void => {
-        let updatedTask: IList
+    const getUpdatedTask = (): IList => {
+        return {
+            id: new Date().toString(),
+            task: form.task,
+            category: {
+                name: formattedCategory,
+                hsl: identicalCategory.length > 0 ? identicalCategory[0].hsl : tagColor
+            },
+            done: false,
+            createdDate: new Date()
+        }
+    }
 
+    const submitForm = (): void => {
         if (isTaskValid && isCategoryValid) {
             // update list and category state
-            if (identicalCategory.length > 0) {
-                updatedTask = {
-                    id: new Date().toString(),
-                    task: form.task,
-                    category: {
-                        name: formattedCategory,
-                        hsl: identicalCategory[0].hsl
-                    },
-                    done: false,
-                    createdDate: new Date()
-                }
-            } else {
-                updatedTask = {
-                    id: new Date().toString(),
-                    task: form.task,
-                    category: {
-                        name: formattedCategory,
-                        hsl: tagColor
-                    },
-                    done: false,
-                    createdDate: new Date()
-                }
-            }
-            setList([...list, updatedTask])
+            setList([...list, getUpdatedTask()])
             updateCategory()
 
             // clear form state

@@ -39,9 +39,9 @@ const ListBase = (props: IProps) => {
     const { classes, item, setList, list, setCategory, setSortBy } = props
 
     const { task, category, createdDate, done } = item
-    const [modalState, setModalState] = useState(false)
+    const [modalState, setModalState] = useState<boolean>(false)
 
-    const handleCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleCheckbox = (e: ChangeEvent<HTMLInputElement>): void => {
         const index: number = list.findIndex(sample => sample.id === item.id)
         const updatedList: IList = {
             ...item,
@@ -54,7 +54,7 @@ const ListBase = (props: IProps) => {
         ])
     }
 
-    const handleDelete = () => {
+    const handleDelete = (): void => {
         if (list.filter((i: IList) => i.category === item.category).length === 1) {
             setCategory(props.category.filter((c: ICategory) => c.name !== item.category.name))
             setSortBy('all')

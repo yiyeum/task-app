@@ -1,7 +1,7 @@
 import { IList } from '../models'
 
 export const List: IList = {
-    id: '436b8fce-aae6-4f6a-b0a7-eeaa1a0dfc5e',
+    id: new Date().toString(),
     task: 'Clean room',
     category: {
         name: 'Home',

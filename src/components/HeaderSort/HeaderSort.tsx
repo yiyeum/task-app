@@ -26,7 +26,7 @@ interface IProps extends WithStyles<typeof styles> {
 const HeaderSortBase = (props: IProps) => {
     const { classes, category, sortBy, setSortBy, list } = props
 
-    const getTaskProgress = () => {
+    const getTaskProgress = (): string => {
         const doneLength = list.filter((item: IList) => item.done).length
         return `${doneLength} of ${list.length} tasks`
     }

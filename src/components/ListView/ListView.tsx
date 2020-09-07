@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { WithStyles, withStyles, Box, Typography } from '@material-ui/core'
-import EventSeatIcon from '@material-ui/icons/EventSeat'
-import { IList, ICategory } from '../../models';
-import { List } from '..'
+import { WithStyles, withStyles, Box } from '@material-ui/core'
+import { IList, ICategory } from '../../models'
+import { List, NoListFound } from '../'
 
 const styles = {
     root: {
@@ -12,10 +11,6 @@ const styles = {
         marginBottom: '95px',
         borderTopLeftRadius: 90,
         borderTopRightRadius: 90
-    },
-    icon: {
-        color: '#bdbdbd',
-        fontSize: 90
     }
 }
 
@@ -31,7 +26,7 @@ interface IProps extends WithStyles<typeof styles> {
 const ListViewBase = (props: IProps) => {
     const { classes, list, sortBy, setList, setCategory, category, setSortBy } = props
 
-    const filterTodos = (allTodoItems: IList[], selectedCategory: string) => {
+    const filterTodos = (allTodoItems: IList[], selectedCategory: string): IList[] => {
         if (allTodoItems.length > 0) {
             if (selectedCategory === 'all') {
                 return allTodoItems
@@ -40,13 +35,14 @@ const ListViewBase = (props: IProps) => {
                 return item.category.name === selectedCategory
             })
         }
+        return []
     }
 
     return (
         <div className={classes.root}>
             {
-                filterTodos(list, sortBy) ?
-                    filterTodos(list, sortBy)!.map((item: IList) => {
+                filterTodos(list, sortBy).length > 0 ?
+                    filterTodos(list, sortBy).map((item: IList) => {
                         return (
                             <List
                                 item={item}
@@ -61,13 +57,7 @@ const ListViewBase = (props: IProps) => {
                     })
                     :
                     <Box textAlign='center' mt={20}>
-                        <EventSeatIcon className={classes.icon} />
-                        <Typography variant='body1' color='textSecondary'>
-                            No tasks found
-                        </Typography>
-                        <Typography variant='body1' color='textSecondary'>
-                            Sit back and relax!
-                        </Typography>
+                        <NoListFound />
                     </Box>
             }
         </div>
