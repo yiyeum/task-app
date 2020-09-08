@@ -8,7 +8,7 @@ export const TaskView = () => {
     const [sortBy, setSortBy] = useState('all')
 
     return (
-        <>
+        <div data-testid='task-view'>
             <HeaderSort
                 category={category}
                 sortBy={sortBy}
@@ -29,6 +29,6 @@ export const TaskView = () => {
                 category={category}
                 setCategory={setCategory}
             />
-        </>
+        </div>
     );
 }

@@ -63,12 +63,13 @@ const ListBase = (props: IProps) => {
     }
 
     return (
-        <>
+        <div data-testid='list'>
             <Grid container className={classes.root}>
                 <Grid item lg={1} md={1} sm={1} className={classes.checkboxGrid}>
                     <Checkbox
                         onChange={handleCheckbox}
                         checked={item.done}
+                        data-testid='task-checkbox'
                     />
                 </Grid>
                 <Grid item lg={7} md={9} sm={9}>
@@ -93,7 +94,7 @@ const ListBase = (props: IProps) => {
                 </Grid>
             </Grid>
             <DeleteModal open={modalState} setOpen={setModalState} handleDelete={handleDelete} />
-        </>
+        </div>
     );
 }
 

@@ -97,7 +97,7 @@ const TaskFormBase = (props: IProps) => {
     }
 
     return (
-        <Grid container className={classes.root}>
+        <Grid container className={classes.root} data-testid='task-form'>
             <Grid item lg={2} md={2} sm={2} xs={1}>
                 <Button
                     aria-label="Add Task"

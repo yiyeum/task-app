@@ -39,7 +39,7 @@ const ListViewBase = (props: IProps) => {
     }
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} data-testid='list-view'>
             {
                 filterTodos(list, sortBy).length > 0 ?
                     filterTodos(list, sortBy).map((item: ITask) => {

@@ -13,7 +13,7 @@ const NoListFoundBase = (props: WithStyles<typeof styles>) => {
     const { classes } = props
 
     return (
-        <>
+        <div data-testid='no-list-found'>
             <EventSeatIcon className={classes.icon} />
             <Typography variant='body1' color='textSecondary'>
                 No tasks found
@@ -21,7 +21,7 @@ const NoListFoundBase = (props: WithStyles<typeof styles>) => {
             <Typography variant='body1' color='textSecondary'>
                 Sit back and relax!
             </Typography>
-        </>
+        </div>
     );
 }
 

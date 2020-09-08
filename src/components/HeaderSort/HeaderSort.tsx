@@ -32,7 +32,7 @@ const HeaderSortBase = (props: IProps) => {
     }
 
     return (
-        <Grid container className={classes.root}>
+        <Grid container className={classes.root} data-testid='header-sort'>
             <Grid item lg={8} md={8} sm={12} xs={12}>
                 <Typography variant='h4' color='textPrimary'>My Tasks</Typography>
                 <Typography variant='body1' color='textSecondary'>{getTaskProgress()}</Typography>
