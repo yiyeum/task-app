@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, ChangeEvent, useState } from 'react'
 import { Grid, Checkbox, Typography, WithStyles, withStyles, Button, Box } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { IList, ICategory } from '../../models'
+import { ITask, ICategory } from '../../models'
 import { DeleteModal, CategoryTag } from '../'
 import { formatDate } from '../../utils/format'
 
@@ -27,9 +27,9 @@ const styles = {
 }
 
 interface IProps extends WithStyles<typeof styles> {
-    item: IList
-    setList: Dispatch<SetStateAction<IList[]>>
-    list: IList[]
+    item: ITask
+    setList: Dispatch<SetStateAction<ITask[]>>
+    list: ITask[]
     setCategory: Dispatch<SetStateAction<ICategory[]>>
     category: ICategory[]
     setSortBy: Dispatch<SetStateAction<string>>
@@ -43,7 +43,7 @@ const ListBase = (props: IProps) => {
 
     const handleCheckbox = (e: ChangeEvent<HTMLInputElement>): void => {
         const index: number = list.findIndex(sample => sample.id === item.id)
-        const updatedList: IList = {
+        const updatedList: ITask = {
             ...item,
             done: e.target.checked
         }
@@ -55,20 +55,21 @@ const ListBase = (props: IProps) => {
     }
 
     const handleDelete = (): void => {
-        if (list.filter((i: IList) => i.category === item.category).length === 1) {
+        if (list.filter((i: ITask) => i.category === item.category).length === 1) {
             setCategory(props.category.filter((c: ICategory) => c.name !== item.category.name))
             setSortBy('all')
         }
-        setList(list.filter((i: IList) => i.id !== item.id))
+        setList(list.filter((i: ITask) => i.id !== item.id))
     }
 
     return (
-        <>
+        <div data-testid='list'>
             <Grid container className={classes.root}>
                 <Grid item lg={1} md={1} sm={1} className={classes.checkboxGrid}>
                     <Checkbox
                         onChange={handleCheckbox}
                         checked={item.done}
+                        data-testid='task-checkbox'
                     />
                 </Grid>
                 <Grid item lg={7} md={9} sm={9}>
@@ -93,7 +94,7 @@ const ListBase = (props: IProps) => {
                 </Grid>
             </Grid>
             <DeleteModal open={modalState} setOpen={setModalState} handleDelete={handleDelete} />
-        </>
+        </div>
     );
 }
 

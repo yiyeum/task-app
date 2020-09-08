@@ -20,7 +20,7 @@ interface IProps extends WithStyles<typeof styles> {
 const CategoryTagBase = (props: IProps) => {
     const { classes, category, done } = props
     return (
-        <div className={classes.tag} style={{ backgroundColor: `${category.hsl}` }}>
+        <div data-testid='category-tag' className={classes.tag} style={{ backgroundColor: `${category.hsl}` }}>
             <Typography
                 variant='body2'
                 color='textPrimary'

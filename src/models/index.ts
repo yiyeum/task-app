@@ -1,2 +1,2 @@
-export * from './IList'
+export * from './ITask'
 export * from './ICategory'
