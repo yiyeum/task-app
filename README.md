@@ -16,6 +16,20 @@ Download the project or clone and run the following: <br />
 `npm install` <br />
 `npm start`
 
+## Planning note
+* Requirements
+<img src='https://user-images.githubusercontent.com/20132973/92421245-a0bd0100-f145-11ea-8747-a64df43a6b7f.JPG' width="430" />
+
+* Wireframe
+<img src='https://user-images.githubusercontent.com/20132973/92421331-09a47900-f146-11ea-8eb9-d918abd7b3ae.JPG' width="600" />
+
+* Data flow idea
+<img src='https://user-images.githubusercontent.com/20132973/92421351-20e36680-f146-11ea-897c-64aa12d889c8.JPG' width="550" />
+
+* Mockup 
+<img src='https://user-images.githubusercontent.com/20132973/92421506-cd254d00-f146-11ea-9a63-d36470633c61.png' width="600" />
+
+
 ## Features considered to be added in the future
 * Fallback pages - 404
 * Dashboard to display the category cards (to be more interactive)
