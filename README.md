@@ -16,6 +16,10 @@ Download the project or clone and run the following: <br />
 `npm install` <br />
 `npm start`
 
+## Test
+React Testing Library is used to test react components and Jest for test runner.<br />
+`npm run test`
+
 ## Planning note
 * Requirements
 <img src='https://user-images.githubusercontent.com/20132973/92421245-a0bd0100-f145-11ea-8747-a64df43a6b7f.JPG' width="430" />
