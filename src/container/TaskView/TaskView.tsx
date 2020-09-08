@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { HeaderSort, ListView, TaskForm } from '../../components'
-import { IList, ICategory } from '../../models'
+import { ITask, ICategory } from '../../models'
 
 export const TaskView = () => {
-    const [list, setList] = useState<IList[]>([])
+    const [list, setList] = useState<ITask[]>([])
     const [category, setCategory] = useState<ICategory[]>([])
     const [sortBy, setSortBy] = useState('all')
 

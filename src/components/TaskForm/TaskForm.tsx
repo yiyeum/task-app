@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
 import { Grid, TextField, WithStyles, withStyles, Button } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { IList, ICategory } from '../../models'
+import { ITask, ICategory } from '../../models'
 import { getPastelColor } from '../../utils/helper'
 
 const styles = {
@@ -27,7 +27,7 @@ const styles = {
 }
 
 interface IProps extends WithStyles<typeof styles> {
-    list: IList[]
+    list: ITask[]
     setList: Dispatch<SetStateAction<any>>
     category: ICategory[]
     setCategory: Dispatch<SetStateAction<ICategory[]>>
@@ -70,7 +70,7 @@ const TaskFormBase = (props: IProps) => {
         }
     }
 
-    const getUpdatedTask = (): IList => {
+    const getUpdatedTask = (): ITask => {
         return {
             id: new Date().toString(),
             task: form.task,

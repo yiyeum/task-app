@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { WithStyles, withStyles, Box } from '@material-ui/core'
-import { IList, ICategory } from '../../models'
+import { ITask, ICategory } from '../../models'
 import { List, NoListFound } from '../'
 
 const styles = {
@@ -15,9 +15,9 @@ const styles = {
 }
 
 interface IProps extends WithStyles<typeof styles> {
-    list: IList[]
+    list: ITask[]
     sortBy: string
-    setList: Dispatch<SetStateAction<IList[]>>
+    setList: Dispatch<SetStateAction<ITask[]>>
     setCategory: Dispatch<SetStateAction<ICategory[]>>
     category: ICategory[]
     setSortBy: Dispatch<SetStateAction<string>>
@@ -26,12 +26,12 @@ interface IProps extends WithStyles<typeof styles> {
 const ListViewBase = (props: IProps) => {
     const { classes, list, sortBy, setList, setCategory, category, setSortBy } = props
 
-    const filterTodos = (allTodoItems: IList[], selectedCategory: string): IList[] => {
+    const filterTodos = (allTodoItems: ITask[], selectedCategory: string): ITask[] => {
         if (allTodoItems.length > 0) {
             if (selectedCategory === 'all') {
                 return allTodoItems
             }
-            return allTodoItems.filter((item: IList) => {
+            return allTodoItems.filter((item: ITask) => {
                 return item.category.name === selectedCategory
             })
         }
@@ -42,7 +42,7 @@ const ListViewBase = (props: IProps) => {
         <div className={classes.root}>
             {
                 filterTodos(list, sortBy).length > 0 ?
-                    filterTodos(list, sortBy).map((item: IList) => {
+                    filterTodos(list, sortBy).map((item: ITask) => {
                         return (
                             <List
                                 item={item}

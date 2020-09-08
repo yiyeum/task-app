@@ -1,6 +1,6 @@
-import { IList } from '../models'
+import { ITask } from '../models'
 
-export const List: IList = {
+export const List: ITask = {
     id: new Date().toString(),
     task: 'Clean room',
     category: {

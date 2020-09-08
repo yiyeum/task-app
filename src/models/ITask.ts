@@ -1,6 +1,6 @@
 import { ICategory } from "./ICategory"
 
-export interface IList {
+export interface ITask {
     id: string
     task: string
     category: ICategory

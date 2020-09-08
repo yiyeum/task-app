@@ -1,7 +1,7 @@
 import React, { SetStateAction, Dispatch, ChangeEvent } from 'react'
 import { Grid, Typography, Select, MenuItem } from '@material-ui/core'
 import { WithStyles, withStyles } from '@material-ui/core';
-import { IList, ICategory } from '../../models';
+import { ITask, ICategory } from '../../models';
 import bgImage from '../../assets/images/bg.png'
 
 const styles = {
@@ -20,14 +20,14 @@ interface IProps extends WithStyles<typeof styles> {
     category: ICategory[]
     sortBy: string
     setSortBy: Dispatch<SetStateAction<string>>
-    list: IList[]
+    list: ITask[]
 }
 
 const HeaderSortBase = (props: IProps) => {
     const { classes, category, sortBy, setSortBy, list } = props
 
     const getTaskProgress = (): string => {
-        const doneLength = list.filter((item: IList) => item.done).length
+        const doneLength = list.filter((item: ITask) => item.done).length
         return `${doneLength} of ${list.length} tasks`
     }
 
