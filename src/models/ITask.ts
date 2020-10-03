@@ -1,7 +1,8 @@
 export interface ITask {
     id: string
     desc: string
-    category: string
+    categoryId: string
     done: boolean
     createdDate: Date
+    priority: string
 }
