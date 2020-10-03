@@ -1,12 +1,12 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { Header } from '.'
+import { HeaderFilter } from '.'
 
 const { getByTestId } = render(
-    <Header />
+    <HeaderFilter />
 );
 
-test('Render Header component', () => {
+test('Render HeaderFilter component', () => {
     expect(getByTestId('header')).toBeInTheDocument()
 })
 

@@ -6,7 +6,7 @@ import { TaskSaverContext } from '../../App'
 
 const styles = {
     root: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#f5f5f5',
         padding: 20,
         minHeight: '100vh',
         marginBottom: '95px',
@@ -26,7 +26,7 @@ const ListViewBase = ({ classes }: WithStyles<typeof styles>) => {
                 const filteredByPriority: ITask[] = tasks.filter((task: ITask) => priorityFilter.includes(task.priority))
                 return getFilteredByQuery(filteredByPriority)
             } else {
-                return tasks
+                return getFilteredByQuery(tasks)
             }
         }
         return []
@@ -42,7 +42,7 @@ const ListViewBase = ({ classes }: WithStyles<typeof styles>) => {
                 filterTodos().length > 0 ?
                     filterTodos().map((item: ITask) => {
                         return (
-                            <TaskItem item={item} />
+                            <TaskItem item={item} key={item.id} />
                         )
                     })
                     :

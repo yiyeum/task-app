@@ -1,4 +1,4 @@
-export * from './Header'
+export * from './HeaderFilter'
 export * from './ListView'
 export * from './TaskForm'
 export * from './DeleteModal'
