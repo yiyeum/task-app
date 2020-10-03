@@ -1,9 +1,10 @@
-import React, { Dispatch, SetStateAction, ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useContext, useState } from 'react'
 import { Grid, Checkbox, Typography, WithStyles, withStyles, Button, Box } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { ITask, ICategory } from '../../models'
-import { DeleteModal, CategoryTag } from '../'
+import { ITask, ICategory, ITaskSaverData } from '../../models'
+import { DeleteModal, CategoryTag } from '..'
 import { formatDate } from '../../utils/format'
+import { TaskSaverContext } from '../../App'
 
 const styles = {
     root: {
@@ -28,42 +29,38 @@ const styles = {
 
 interface IProps extends WithStyles<typeof styles> {
     item: ITask
-    setList: Dispatch<SetStateAction<ITask[]>>
-    list: ITask[]
-    setCategory: Dispatch<SetStateAction<ICategory[]>>
-    category: ICategory[]
-    setSortBy: Dispatch<SetStateAction<string>>
 }
 
-const ListBase = (props: IProps) => {
-    const { classes, item, setList, list, setCategory, setSortBy } = props
-
-    const { task, category, createdDate, done } = item
+const TaskItemBase = ({ classes, item }: IProps) => {
+    const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
+    const { tasks, setTask, categories, setCategory, setSortBy, sortBy } = taskSaverData
+    const { desc, categoryId, createdDate, done, id } = item
+    const currentCategory: ICategory = categories.filter((category: ICategory) => category.id === categoryId)[0]
     const [modalState, setModalState] = useState<boolean>(false)
 
     const handleCheckbox = (e: ChangeEvent<HTMLInputElement>): void => {
-        const index: number = list.findIndex(sample => sample.id === item.id)
-        const updatedList: ITask = {
+        const index: number = tasks.findIndex((task: ITask) => task.id === id)
+        const updatedTask: ITask = {
             ...item,
             done: e.target.checked
         }
-        setList([
-            ...list.slice(0, index),
-            updatedList,
-            ...list.slice(index + 1)
+        setTask([
+            ...tasks.slice(0, index),
+            updatedTask,
+            ...tasks.slice(index + 1)
         ])
     }
 
     const handleDelete = (): void => {
-        if (list.filter((i: ITask) => i.category === item.category).length === 1) {
-            setCategory(props.category.filter((c: ICategory) => c.name !== item.category.name))
-            setSortBy('all')
+        if (tasks.filter((task: ITask) => task.categoryId === item.categoryId).length === 1) {
+            setCategory(categories.filter((category: ICategory) => category.id !== categoryId))
+            setSortBy({ ...sortBy, searchQuery: '' })
         }
-        setList(list.filter((i: ITask) => i.id !== item.id))
+        setTask(tasks.filter((task: ITask) => task.id !== id))
     }
 
     return (
-        <div data-testid='list'>
+        <div data-testid='task-item'>
             <Grid container className={classes.root}>
                 <Grid item lg={1} md={1} sm={1} className={classes.checkboxGrid}>
                     <Checkbox
@@ -75,11 +72,11 @@ const ListBase = (props: IProps) => {
                 <Grid item lg={7} md={9} sm={9}>
                     <Box display='inline-block'>
                         <Typography variant='body1' color='textPrimary' className={done ? classes.done : ''}>
-                            {task}
+                            {desc}
                         </Typography>
                     </Box>
                     <Box display='inline-block' ml={5}>
-                        <CategoryTag done={done} category={category} />
+                        <CategoryTag done={done} category={currentCategory} />
                     </Box>
                     <Box display='block'>
                         <Typography variant='caption' color='textSecondary'>
@@ -98,4 +95,4 @@ const ListBase = (props: IProps) => {
     );
 }
 
-export const List = withStyles(styles)(ListBase)
+export const TaskItem = withStyles(styles)(TaskItemBase)

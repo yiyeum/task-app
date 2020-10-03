@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import { HeaderSort, ListView, TaskForm } from './components'
+import { Header, ListView, TaskForm } from './components'
 import { ITask, ICategory, ITaskSaverData, ISortByState } from './models'
 import { taskSaverData } from './utils/store'
 
@@ -14,7 +14,7 @@ const App = () => {
     <TaskSaverContext.Provider value={{
       tasks, setTask, categories, setCategory, sortBy, setSortBy
     }}>
-      <HeaderSort />
+      <Header />
       <ListView />
       <TaskForm />
     </TaskSaverContext.Provider>

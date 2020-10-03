@@ -1,8 +1,11 @@
-import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
-import { Grid, TextField, WithStyles, withStyles, Button } from '@material-ui/core'
+import React, { useState, ChangeEvent, useContext } from 'react'
+import * as uuid from 'uuid'
+import { Grid, TextField, WithStyles, withStyles, Button, Select, MenuItem } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { ITask, ICategory } from '../../models'
+import { ITask, ICategory, ITaskSaverData } from '../../models'
 import { getPastelColor } from '../../utils/helper'
+import { PRIORITY_HIGH } from '../../assets/constants'
+import { TaskSaverContext } from '../../App'
 
 const styles = {
     root: {
@@ -26,31 +29,27 @@ const styles = {
     }
 }
 
-interface IProps extends WithStyles<typeof styles> {
-    list: ITask[]
-    setList: Dispatch<SetStateAction<any>>
-    category: ICategory[]
-    setCategory: Dispatch<SetStateAction<ICategory[]>>
-}
-
 interface IFormState {
     task: string
     category: string
+    priority: string
     error: boolean
 }
 
 const formState: IFormState = {
     task: '',
     category: '',
+    priority: PRIORITY_HIGH,
     error: false
 }
 
-const TaskFormBase = (props: IProps) => {
+const TaskFormBase = ({ classes }: WithStyles<typeof styles>) => {
+    const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
+    const { tasks, setTask, categories, setCategory } = taskSaverData
     const [form, setForm] = useState(formState)
-    const { classes, list, setList, category, setCategory } = props
 
     const formattedCategory: string = form.category.trim().charAt(0).toUpperCase() + form.category.trim().slice(1)
-    const identicalCategory: ICategory[] = category.filter((ct: ICategory) => ct.name === formattedCategory)
+    const identicalCategory: ICategory[] = categories.filter((category: ICategory) => category.name === formattedCategory)
     const tagColor: string = getPastelColor()
 
     let isTaskValid: boolean = form.task.trim().length !== 0
@@ -60,34 +59,34 @@ const TaskFormBase = (props: IProps) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const updateCategory = (): void => {
+    const updateCategory = (categoryId: string): void => {
         if (identicalCategory.length === 0) {
             const categoryWithHsl: ICategory = {
+                id: categoryId,
                 name: formattedCategory,
                 hsl: tagColor
             }
-            setCategory([...category, categoryWithHsl])
+            setCategory([...categories, categoryWithHsl])
         }
     }
 
-    const getUpdatedTask = (): ITask => {
+    const getUpdatedTask = (categoryId: string): ITask => {
         return {
             id: new Date().toString(),
-            task: form.task,
-            category: {
-                name: formattedCategory,
-                hsl: identicalCategory.length > 0 ? identicalCategory[0].hsl : tagColor
-            },
+            desc: form.task,
+            categoryId: categoryId,
             done: false,
+            priority: form.priority,
             createdDate: new Date()
         }
     }
 
     const submitForm = (): void => {
+        const categoryId: string = uuid.v4()
         if (isTaskValid && isCategoryValid) {
             // update list and category state
-            setList([...list, getUpdatedTask()])
-            updateCategory()
+            setTask([...tasks, getUpdatedTask(categoryId)])
+            updateCategory(categoryId)
 
             // clear form state
             setForm(formState)
@@ -96,24 +95,19 @@ const TaskFormBase = (props: IProps) => {
         }
     }
 
+    const selectHandleForm = (e: ChangeEvent<{ value: unknown }>) => {
+        setForm({ ...form, priority: e.target.value as string })
+    };
+
     return (
         <Grid container className={classes.root} data-testid='task-form'>
-            <Grid item lg={2} md={2} sm={2} xs={1}>
-                <Button
-                    aria-label="Add Task"
-                    variant='outlined'
-                    className={classes.btn}
-                    onClick={submitForm}
-                >
-                    <AddIcon className={classes.icon} />
-                </Button>
-            </Grid>
-            <Grid item lg={7} md={7} sm={7} xs={8}>
+            <Grid item lg={5} md={5} sm={5} xs={5}>
                 <TextField
                     className={classes.txtField}
                     placeholder='Task (max 50)'
                     value={form.task}
                     onChange={handleForm}
+                    multiline
                     name='task'
                     required={true}
                     error={form.error && !isTaskValid}
@@ -133,6 +127,23 @@ const TaskFormBase = (props: IProps) => {
                     helperText={(form.error && !isCategoryValid) && 'Pleae fill this field'}
                     inputProps={{ maxLength: 20 }}
                 />
+            </Grid>
+            <Grid item lg={2} md={2} sm={2} xs={2}>
+                <Select value={form.priority} style={{ width: '100%' }} name='priority' onChange={selectHandleForm}>
+                    <MenuItem value='high'>High</MenuItem>
+                    <MenuItem value='medium'>Medium</MenuItem>
+                    <MenuItem value='low'>Low</MenuItem>
+                </Select>
+            </Grid>
+            <Grid item lg={2} md={2} sm={2} xs={2} style={{ textAlign: 'right' }}>
+                <Button
+                    aria-label="Add Task"
+                    variant='outlined'
+                    className={classes.btn}
+                    onClick={submitForm}
+                >
+                    <AddIcon className={classes.icon} />
+                </Button>
             </Grid>
         </Grid>
     );

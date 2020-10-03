@@ -5,7 +5,7 @@ import EventSeatIcon from '@material-ui/icons/EventSeat'
 const styles = {
     icon: {
         color: '#bdbdbd',
-        fontSize: 90
+        fontSize: 50
     }
 }
 
