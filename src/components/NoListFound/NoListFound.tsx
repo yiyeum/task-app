@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { WithStyles, withStyles, Typography } from '@material-ui/core'
 import EventSeatIcon from '@material-ui/icons/EventSeat'
 
@@ -9,7 +9,7 @@ const styles = {
     }
 }
 
-const NoListFoundBase = (props: WithStyles<typeof styles>) => {
+const NoListFoundBase = (props: WithStyles<typeof styles>): ReactElement => {
     const { classes } = props
 
     return (

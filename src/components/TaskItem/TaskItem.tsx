@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useState } from 'react'
+import React, { ChangeEvent, useContext, useState, ReactElement } from 'react'
 import { Grid, Checkbox, Typography, WithStyles, withStyles, Button, Box } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { ITask, ICategory, ITaskSaverData } from '../../models'
@@ -31,7 +31,7 @@ interface IProps extends WithStyles<typeof styles> {
     item: ITask
 }
 
-const TaskItemBase = ({ classes, item }: IProps) => {
+const TaskItemBase = ({ classes, item }: IProps): ReactElement => {
     const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
     const { tasks, setTask, categories, setCategory, setSortBy, sortBy } = taskSaverData
     const { desc, categoryId, createdDate, done, id } = item

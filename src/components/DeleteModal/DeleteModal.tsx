@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, ReactElement } from 'react'
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, WithStyles, withStyles, Theme } from '@material-ui/core'
 
 const styles = (theme: Theme) => ({
@@ -13,8 +13,7 @@ interface IProps extends WithStyles<typeof styles> {
     handleDelete: () => void
 }
 
-const DeleteModalBase = (props: IProps) => {
-    const { open, setOpen, handleDelete, classes } = props
+const DeleteModalBase = ({ open, setOpen, handleDelete, classes }: IProps): ReactElement => {
 
     return (
         <div data-testid='delete-modal'>

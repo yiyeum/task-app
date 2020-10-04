@@ -1,10 +1,10 @@
-import React, { useState, ChangeEvent, useContext } from 'react'
+import React, { useState, ChangeEvent, useContext, ReactElement } from 'react'
 import * as uuid from 'uuid'
 import { Grid, TextField, WithStyles, withStyles, Button, Select, MenuItem } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { ITask, ICategory, ITaskSaverData } from '../../models'
+import { ITask, ICategory, ITaskSaverData, IPriorityListItem } from '../../models'
 import { getPastelColor } from '../../utils/helper'
-import { PRIORITY_HIGH } from '../../assets/constants'
+import { PRIORITY_HIGH, PRIORITY_LIST } from '../../assets/constants'
 import { TaskSaverContext } from '../../App'
 
 const styles = {
@@ -43,7 +43,7 @@ const formState: IFormState = {
     error: false
 }
 
-const TaskFormBase = ({ classes }: WithStyles<typeof styles>) => {
+const TaskFormBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
     const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
     const { tasks, setTask, categories, setCategory } = taskSaverData
     const [form, setForm] = useState(formState)
@@ -130,9 +130,13 @@ const TaskFormBase = ({ classes }: WithStyles<typeof styles>) => {
             </Grid>
             <Grid item lg={2} md={2} sm={2} xs={2}>
                 <Select value={form.priority} style={{ width: '100%' }} name='priority' onChange={selectHandleForm}>
-                    <MenuItem value='high'>High</MenuItem>
-                    <MenuItem value='medium'>Medium</MenuItem>
-                    <MenuItem value='low'>Low</MenuItem>
+                    {
+                        PRIORITY_LIST.map((list: IPriorityListItem) => {
+                            return (
+                                <MenuItem key={list.id} value={list.name}>{list.name}</MenuItem>
+                            )
+                        })
+                    }
                 </Select>
             </Grid>
             <Grid item lg={2} md={2} sm={2} xs={2} style={{ textAlign: 'right' }}>

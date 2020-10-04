@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, ReactElement } from 'react'
 import { WithStyles, withStyles, Box } from '@material-ui/core'
 import { ITask, ITaskSaverData } from '../../models'
 import { NoListFound, TaskItem } from '../'
@@ -15,7 +15,7 @@ const styles = {
     }
 }
 
-const ListViewBase = ({ classes }: WithStyles<typeof styles>) => {
+const ListViewBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
     const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
     const { tasks, sortBy } = taskSaverData
     const { searchQuery, priorityFilter } = sortBy
