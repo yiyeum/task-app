@@ -2,8 +2,8 @@ import React, { useState, ChangeEvent, useContext, ReactElement } from 'react'
 import * as uuid from 'uuid'
 import { Grid, TextField, WithStyles, withStyles, Button, Select, MenuItem } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { ITask, ICategory, ITaskSaverData, IPriorityListItem } from '../../models'
-import { getPastelColor } from '../../utils/helper'
+import { ITask, ICategory, ITaskSaverData, IPriorityListItem, IFormState } from '../../models'
+import { getCapitalizedString, getPastelColor } from '../../utils/helper'
 import { PRIORITY_HIGH, PRIORITY_LIST } from '../../assets/constants'
 import { TaskSaverContext } from '../../App'
 
@@ -29,13 +29,6 @@ const styles = {
     }
 }
 
-interface IFormState {
-    task: string
-    category: string
-    priority: string
-    error: boolean
-}
-
 const formState: IFormState = {
     task: '',
     category: '',
@@ -44,11 +37,16 @@ const formState: IFormState = {
 }
 
 const TaskFormBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
-    const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
-    const { tasks, setTask, categories, setCategory } = taskSaverData
+    const {
+        tasks,
+        setTask,
+        categories,
+        setCategory
+    }: ITaskSaverData = useContext(TaskSaverContext)
+
     const [form, setForm] = useState(formState)
 
-    const formattedCategory: string = form.category.trim().charAt(0).toUpperCase() + form.category.trim().slice(1)
+    const formattedCategory: string = getCapitalizedString(form.category)
     const identicalCategory: ICategory[] = categories.filter((category: ICategory) => category.name === formattedCategory)
     const tagColor: string = getPastelColor()
 
@@ -70,7 +68,8 @@ const TaskFormBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
         }
     }
 
-    const getUpdatedTask = (categoryId: string): ITask => {
+    const getUpdatedTask = (newCategoryId: string): ITask => {
+        const categoryId: string = identicalCategory.length === 0 ? newCategoryId : identicalCategory[0].id
         return {
             id: new Date().toString(),
             desc: form.task,
@@ -82,11 +81,11 @@ const TaskFormBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
     }
 
     const submitForm = (): void => {
-        const categoryId: string = uuid.v4()
+        const newCategoryId: string = uuid.v4()
         if (isTaskValid && isCategoryValid) {
             // update list and category state
-            setTask([...tasks, getUpdatedTask(categoryId)])
-            updateCategory(categoryId)
+            setTask([...tasks, getUpdatedTask(newCategoryId)])
+            updateCategory(newCategoryId)
 
             // clear form state
             setForm(formState)
@@ -97,22 +96,23 @@ const TaskFormBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
 
     const selectHandleForm = (e: ChangeEvent<{ value: unknown }>) => {
         setForm({ ...form, priority: e.target.value as string })
-    };
+    }
 
     return (
         <Grid container className={classes.root} data-testid='task-form'>
             <Grid item lg={5} md={5} sm={5} xs={5}>
                 <TextField
                     className={classes.txtField}
-                    placeholder='Task (max 50)'
+                    placeholder='Task (max 100)'
                     value={form.task}
                     onChange={handleForm}
                     multiline
+                    rowsMax={3}
                     name='task'
                     required={true}
                     error={form.error && !isTaskValid}
                     helperText={(form.error && !isTaskValid) && 'Pleae fill this field'}
-                    inputProps={{ maxLength: 50 }}
+                    inputProps={{ maxLength: 100 }}
                 />
             </Grid>
             <Grid item lg={3} md={3} sm={3} xs={3}>

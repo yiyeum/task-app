@@ -9,8 +9,7 @@ const styles = {
     }
 }
 
-const NoListFoundBase = (props: WithStyles<typeof styles>): ReactElement => {
-    const { classes } = props
+const NoListFoundBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
 
     return (
         <div data-testid='no-list-found'>

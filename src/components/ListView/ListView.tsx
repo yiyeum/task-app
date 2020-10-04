@@ -16,24 +16,23 @@ const styles = {
 }
 
 const ListViewBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
-    const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
-    const { tasks, sortBy } = taskSaverData
+    const { tasks, sortBy }: ITaskSaverData = useContext(TaskSaverContext)
     const { searchQuery, priorityFilter } = sortBy
+
+    const getFilteredByQuery = (tasks: ITask[]): ITask[] => {
+        return tasks.filter((task: ITask) => task.desc.includes(searchQuery))
+    }
 
     const filterTodos = (): ITask[] => {
         if (tasks.length > 0) {
             if (priorityFilter.length > 0) {
                 const filteredByPriority: ITask[] = tasks.filter((task: ITask) => priorityFilter.includes(task.priority))
                 return getFilteredByQuery(filteredByPriority)
-            } else {
-                return getFilteredByQuery(tasks)
             }
+
+            return getFilteredByQuery(tasks)
         }
         return []
-    }
-
-    const getFilteredByQuery = (tasks: ITask[]): ITask[] => {
-        return tasks.filter((task: ITask) => task.desc.includes(searchQuery))
     }
 
     return (

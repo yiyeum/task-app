@@ -16,8 +16,7 @@ const styles = {
 }
 
 const HeaderFilterBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
-    const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
-    const { setSortBy, sortBy } = taskSaverData
+    const { setSortBy, sortBy }: ITaskSaverData = useContext(TaskSaverContext)
     const { searchQuery } = sortBy
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -51,7 +50,7 @@ const HeaderFilterBase = ({ classes }: WithStyles<typeof styles>): ReactElement 
                 {
                     PRIORITY_LIST.map((priorityItem: IPriorityListItem) => {
                         return (
-                            <PriorityChip priorityItem={priorityItem} />
+                            <PriorityChip priorityItem={priorityItem} key={priorityItem.id} />
                         )
                     })
                 }

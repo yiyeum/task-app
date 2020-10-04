@@ -17,8 +17,7 @@ interface IProps extends WithStyles<typeof styles> {
     done: boolean
 }
 
-const CategoryTagBase = (props: IProps): ReactElement => {
-    const { classes, category, done } = props
+const CategoryTagBase = ({ classes, category, done }: IProps): ReactElement => {
     return (
         <div data-testid='category-tag' className={classes.tag} style={{ backgroundColor: `${category.hsl}` }}>
             <Typography

@@ -32,8 +32,7 @@ interface IProps extends WithStyles<typeof styles> {
 }
 
 const TaskItemBase = ({ classes, item }: IProps): ReactElement => {
-    const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
-    const { tasks, setTask, categories, setCategory, setSortBy, sortBy } = taskSaverData
+    const { tasks, setTask, categories, setCategory, setSortBy, sortBy }: ITaskSaverData = useContext(TaskSaverContext)
     const { desc, categoryId, createdDate, done, id } = item
     const currentCategory: ICategory = categories.filter((category: ICategory) => category.id === categoryId)[0]
     const [modalState, setModalState] = useState<boolean>(false)
@@ -69,20 +68,22 @@ const TaskItemBase = ({ classes, item }: IProps): ReactElement => {
                         data-testid='task-checkbox'
                     />
                 </Grid>
-                <Grid item lg={7} md={9} sm={9}>
-                    <Box display='inline-block'>
-                        <Typography variant='body1' color='textPrimary' className={done ? classes.done : ''}>
-                            {desc}
-                        </Typography>
-                    </Box>
-                    <Box display='inline-block' ml={5}>
-                        <CategoryTag done={done} category={currentCategory} />
-                    </Box>
-                    <Box display='block'>
-                        <Typography variant='caption' color='textSecondary'>
-                            {formatDate(createdDate)}
-                        </Typography>
-                    </Box>
+                <Grid item lg={10} md={10} sm={10}>
+                    <Grid container>
+                        <Grid item>
+                            <Typography variant='body1' color='textPrimary' className={done ? classes.done : ''}>
+                                {desc}
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Box ml={5}>
+                                <CategoryTag done={done} category={currentCategory} />
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Typography variant='caption' color='textSecondary'>
+                        {formatDate(createdDate)}
+                    </Typography>
                 </Grid>
                 <Grid item lg={1} md={1} sm={1}>
                     <Button onClick={() => setModalState(true)}>

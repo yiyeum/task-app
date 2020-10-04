@@ -23,13 +23,11 @@ interface IProps extends WithStyles<typeof styles> {
 }
 
 const PriorityChipBase = ({ classes, priorityItem }: IProps): ReactElement => {
-    const taskSaverData: ITaskSaverData = useContext(TaskSaverContext)
-    const { setSortBy, sortBy } = taskSaverData
+    const { setSortBy, sortBy }: ITaskSaverData = useContext(TaskSaverContext)
     const { priorityFilter } = sortBy
 
-    const checkNewPriority = (selectedPriority: string): boolean => {
-        return priorityFilter.filter((priority: string) => priority === selectedPriority).length > 0
-    }
+    const checkNewPriority = (selectedPriority: string): boolean =>
+        priorityFilter.filter((priority: string) => priority === selectedPriority).length > 0
 
     const handleOnClick = (selectedPriority: string): void => {
         if (checkNewPriority(selectedPriority)) {
