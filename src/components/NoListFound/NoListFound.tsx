@@ -1,16 +1,15 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { WithStyles, withStyles, Typography } from '@material-ui/core'
 import EventSeatIcon from '@material-ui/icons/EventSeat'
 
 const styles = {
     icon: {
         color: '#bdbdbd',
-        fontSize: 90
+        fontSize: 60
     }
 }
 
-const NoListFoundBase = (props: WithStyles<typeof styles>) => {
-    const { classes } = props
+const NoListFoundBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
 
     return (
         <div data-testid='no-list-found'>

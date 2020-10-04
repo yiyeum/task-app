@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Typography, WithStyles, withStyles } from '@material-ui/core'
 import { ICategory } from '../../models'
 
@@ -17,8 +17,7 @@ interface IProps extends WithStyles<typeof styles> {
     done: boolean
 }
 
-const CategoryTagBase = (props: IProps) => {
-    const { classes, category, done } = props
+const CategoryTagBase = ({ classes, category, done }: IProps): ReactElement => {
     return (
         <div data-testid='category-tag' className={classes.tag} style={{ backgroundColor: `${category.hsl}` }}>
             <Typography

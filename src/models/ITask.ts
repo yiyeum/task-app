@@ -1,9 +1,8 @@
-import { ICategory } from "./ICategory"
-
 export interface ITask {
     id: string
-    task: string
-    category: ICategory
+    desc: string
+    categoryId: string
     done: boolean
     createdDate: Date
+    priority: string
 }

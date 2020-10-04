@@ -1,11 +1,12 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { useContext, ReactElement } from 'react'
 import { WithStyles, withStyles, Box } from '@material-ui/core'
-import { ITask, ICategory } from '../../models'
-import { List, NoListFound } from '../'
+import { ITask, ITaskSaverData } from '../../models'
+import { NoListFound, TaskItem } from '../'
+import { TaskSaverContext } from '../../App'
 
 const styles = {
     root: {
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#f5f5f5',
         padding: 20,
         minHeight: '100vh',
         marginBottom: '95px',
@@ -14,26 +15,22 @@ const styles = {
     }
 }
 
-interface IProps extends WithStyles<typeof styles> {
-    list: ITask[]
-    sortBy: string
-    setList: Dispatch<SetStateAction<ITask[]>>
-    setCategory: Dispatch<SetStateAction<ICategory[]>>
-    category: ICategory[]
-    setSortBy: Dispatch<SetStateAction<string>>
-}
+const ListViewBase = ({ classes }: WithStyles<typeof styles>): ReactElement => {
+    const { tasks, sortBy }: ITaskSaverData = useContext(TaskSaverContext)
+    const { searchQuery, priorityFilter } = sortBy
 
-const ListViewBase = (props: IProps) => {
-    const { classes, list, sortBy, setList, setCategory, category, setSortBy } = props
+    const getFilteredByQuery = (tasks: ITask[]): ITask[] => {
+        return tasks.filter((task: ITask) => task.desc.includes(searchQuery))
+    }
 
-    const filterTodos = (allTodoItems: ITask[], selectedCategory: string): ITask[] => {
-        if (allTodoItems.length > 0) {
-            if (selectedCategory === 'all') {
-                return allTodoItems
+    const filterTodos = (): ITask[] => {
+        if (tasks.length > 0) {
+            if (priorityFilter.length > 0) {
+                const filteredByPriority: ITask[] = tasks.filter((task: ITask) => priorityFilter.includes(task.priority))
+                return getFilteredByQuery(filteredByPriority)
             }
-            return allTodoItems.filter((item: ITask) => {
-                return item.category.name === selectedCategory
-            })
+
+            return getFilteredByQuery(tasks)
         }
         return []
     }
@@ -41,18 +38,10 @@ const ListViewBase = (props: IProps) => {
     return (
         <div className={classes.root} data-testid='list-view'>
             {
-                filterTodos(list, sortBy).length > 0 ?
-                    filterTodos(list, sortBy).map((item: ITask) => {
+                filterTodos().length > 0 ?
+                    filterTodos().map((item: ITask) => {
                         return (
-                            <List
-                                item={item}
-                                setList={setList}
-                                list={list}
-                                key={item.id}
-                                setCategory={setCategory}
-                                category={category}
-                                setSortBy={setSortBy}
-                            />
+                            <TaskItem item={item} key={item.id} />
                         )
                     })
                     :
