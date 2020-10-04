@@ -25,7 +25,7 @@ const HeaderFilterBase = ({ classes }: WithStyles<typeof styles>): ReactElement 
     }
 
     return (
-        <Grid container className={classes.root} data-testid='header' alignItems='flex-end'>
+        <Grid container className={classes.root} data-testid='header-filter' alignItems='flex-end'>
             <Grid item lg={5} md={5} sm={12} xs={12}>
                 <Header />
             </Grid>
